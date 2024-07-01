@@ -12,19 +12,23 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - { python-version: 3.9, os: ubuntu-latest, session: "pre-commit" }
-          - { python-version: 3.9, os: ubuntu-latest, session: "safety" }
-          - { python-version: 3.9, os: ubuntu-latest, session: "mypy" }
-          - { python-version: 3.8, os: ubuntu-latest, session: "mypy" }
-          - { python-version: 3.7, os: ubuntu-latest, session: "mypy" }
-          - { python-version: 3.9, os: ubuntu-latest, session: "tests" }
-          - { python-version: 3.8, os: ubuntu-latest, session: "tests" }
-          - { python-version: 3.7, os: ubuntu-latest, session: "tests" }
-          - { python-version: 3.9, os: windows-latest, session: "tests" }
-          - { python-version: 3.9, os: macos-latest, session: "tests" }
-          - { python-version: 3.9, os: ubuntu-latest, session: "typeguard" }
-          - { python-version: 3.9, os: ubuntu-latest, session: "xdoctest" }
-          - { python-version: 3.8, os: ubuntu-latest, session: "docs-build" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "pre-commit" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "safety" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "mypy" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "mypy" }
+          - { python-version: "3.10", os: ubuntu-latest, session: "mypy" }
+          - { python-version: "3.9", os: ubuntu-latest, session: "mypy" }
+          - { python-version: "3.8", os: ubuntu-latest, session: "mypy" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "tests" }
+          - { python-version: "3.11", os: ubuntu-latest, session: "tests" }
+          - { python-version: "3.10", os: ubuntu-latest, session: "tests" }
+          - { python-version: "3.9", os: ubuntu-latest, session: "tests" }
+          - { python-version: "3.8", os: ubuntu-latest, session: "tests" }
+          - { python-version: "3.12", os: windows-latest, session: "tests" }
+          - { python-version: "3.12", os: macos-latest, session: "tests" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "typeguard" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "xdoctest" }
+          - { python-version: "3.12", os: ubuntu-latest, session: "docs-build" }
 
     env:
       NOXSESSION: ${{ matrix.session }}
@@ -47,13 +51,13 @@ jobs:
 
       - name: Install Poetry
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt poetry
+          pipx install --pip-args=--constraint="$(pwd)/.github/workflows/constraints.txt" poetry
           poetry --version
 
       - name: Install Nox
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          pipx install --pip-args=--constraint="$(pwd)/.github/workflows/constraints.txt" nox
+          pipx inject --pip-args=--constraint="$(pwd)/.github/workflows/constraints.txt" nox nox-poetry
           nox --version
 
       - name: Compute pre-commit cache key
@@ -123,13 +127,13 @@ jobs:
 
       - name: Install Poetry
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt poetry
+          pipx install --pip-args=--constraint="$(pwd)/.github/workflows/constraints.txt" poetry
           poetry --version
 
       - name: Install Nox
         run: |
-          pipx install --pip-args=--constraint=.github/workflows/constraints.txt nox
-          pipx inject --pip-args=--constraint=.github/workflows/constraints.txt nox nox-poetry
+          pipx install --pip-args=--constraint="$(pwd)/.github/workflows/constraints.txt" nox
+          pipx inject --pip-args=--constraint="$(pwd)/.github/workflows/constraints.txt" nox nox-poetry
           nox --version
 
       - name: Download coverage data
