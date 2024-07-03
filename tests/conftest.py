@@ -26,7 +26,7 @@ def context() -> Dict[str, str]:
 @pytest.fixture(params=["vanilla", "cruft"])
 def flavor(request: pytest.FixtureRequest) -> str:
     """Test flavor, either vanilla cookiecutter or cruft."""
-    out: str = request.param  # type: ignore[attr-defined]
+    out: str = request.param
     return out
 
 
@@ -131,7 +131,7 @@ def cookiecutter_instance(
         cookiecutter(template, no_input=True, output_dir=str(flavor_path))
         return flavor_path / context["project_slug"]
     elif flavor == "cruft":
-        import cruft  # type: ignore[import]
+        import cruft  # type: ignore[import-untyped]
 
         path: Path = cruft.create(
             template_git_url=template, no_input=True, output_dir=flavor_path
